@@ -1,7 +1,14 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Post } from '../../post/entities/post.entity';
 
-@Entity("users")
-
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,9 +25,12 @@ export class User {
   @Column()
   password: string;
 
-@CreateDateColumn()
+  @CreateDateColumn()
   created_at: Date;
 
-@UpdateDateColumn()
+  @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
 }
